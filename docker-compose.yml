@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq_practice
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"  # Порт для AMQP (основной протокол RabbitMQ)
+      - "15672:15672"  # Порт для веб-интерфейса управления (RabbitMQ Management)
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest  # Имя пользователя по умолчанию
+      - RABBITMQ_DEFAULT_PASS=guest  # Пароль по умолчанию
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq  # Сохранение данных RabbitMQ
+    networks:
+      - rabbitmq_network
+
+volumes:
+  rabbitmq_data:
+    driver: local
+
+networks:
+  rabbitmq_network:
+    driver: bridge
